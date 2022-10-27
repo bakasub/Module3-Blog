@@ -17,3 +17,7 @@ create table posts (
 
 alter table posts add userId int not null;
 alter table posts add foreign key (userID) references users(userId);
+ALTER TABLE users
+    ADD fullName varchar(50),
+    add address varchar(50),
+    add phoneNumber int;
