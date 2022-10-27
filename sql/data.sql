@@ -8,7 +8,7 @@ create table users(
                       status bit not null
 );
 
-create table posts (
+create table posts  (
                        id int not null primary key auto_increment,
                        title varchar(255),
                        content varchar(1000),
