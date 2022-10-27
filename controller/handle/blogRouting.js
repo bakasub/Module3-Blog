@@ -3,6 +3,8 @@ const qs=require('qs')
 const UserService = require ('B:\\codegym\\casemodul3\\Module3-Blog\\service\\userService..js')
 let alert = require('alert');
 class BlogRouting {
+    static userID
+    static userTotal
     static showHome(req, res) {
         fs.readFile('./views/index.html', 'utf-8', async (err, createHtml) => {
             if (err) {
@@ -90,7 +92,8 @@ class BlogRouting {
                     let dataUser =  await UserService.dataUser()
                     for (let user of dataUser) {
                         if(information.password==user.password&&information.name==user.username){
-
+                               BlogRouting.userID = user.userId
+                            BlogRouting.userTotal = user
                             res.writeHead(301, {'location': `/home/user/${user.userId}`})
                             res.end();
                         }
@@ -101,17 +104,52 @@ class BlogRouting {
         }
     }
     static showHomeUser(req, res){
-        fs.readFile('./views/user.html', 'utf-8', async (err, createHtml) => {
+        fs.readFile('./views/user.html', 'utf-8', async (err, createHtmlUser) => {
             if (err) {
                 console.log(err.message)
             } else {
-
-
+                 createHtmlUser = createHtmlUser.replace('{idd}',BlogRouting.userTotal.userId)
+                createHtmlUser = createHtmlUser.replace('{Name}',BlogRouting.userTotal.username)
                 res.writeHead('200', 'txt/html')
-                res.write(createHtml)
+                res.write(createHtmlUser)
                 res.end()
             }
         })
+    }
+    static writeBlog(req,res){
+        if (req.method == "GET") {
+            fs.readFile("./views/writeBlog.html", "utf-8", (err, htmlWriteBlog) => {
+                if (err) {
+                    console.log(err.message)
+                }
+                htmlWriteBlog = htmlWriteBlog.replace('{id}',BlogRouting.userTotal.userId)
+                res.write(htmlWriteBlog)
+                res.end()
+            })
+        } else {
+            let informationChuck = ''
+            req.on('data', chunk => {
+                informationChuck += chunk
+            })
+
+            req.on('end', async (err) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    let information = qs.parse(informationChuck)
+                    console.log(information)
+                    let dataUser =  await UserService.dataUser()
+                    for (let user of dataUser) {
+                        if(information.password==user.password&&information.name==user.username){
+                            BlogRouting.userID = user.userId
+                            res.writeHead(301, {'location': `/home/user/${user.userId}`})
+                            res.end();
+                        }
+                    }
+
+                }
+            })
+        }
     }
 
 }

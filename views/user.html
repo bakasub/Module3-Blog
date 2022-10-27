@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-12">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#" style="font-size: 35px">Blog.com</a>
+                <a class="navbar-brand" href="/home/user/{id}" style="font-size: 35px">Blog.com</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -40,10 +40,10 @@
                             <a href="#page-top"></a>
                         </li>
                         <li class="m-3">
-                            <a class="page-scroll btn btn-dark" href="#home">Home</a>
+                            <a class="page-scroll btn btn-dark" href="/home/user/{id}">Home</a>
                         </li>
                         <li class="m-3">
-                            <a class="page-scroll btn btn-dark" href="#blog">Blog</a>
+                            <a class="page-scroll btn btn-dark" href="/blog/user/{id}">Blog</a>
                         </li>
                         <li class="m-3">
                             <a class="page-scroll btn btn-dark" href="#about">About</a>
@@ -52,7 +52,7 @@
                             <a class="page-scroll btn btn-dark" href="#contact">Contact</a>
                         </li>
                         <li class="m-3">
-                            <a href="/login">
+                            <a href="/home">
                                 <button class="page-scroll btn btn-dark" type="submit">Logout</button>
                             </a>
                         </li>
@@ -66,6 +66,8 @@
     <br>
     <br>
     <br>
+    <h4>User Name: {Name}</h4>
+    <br>
     <h1 style="text-align: center">WELCOME TO BLOG.com</h1>
     <br>
     <h5 style="text-align: center">43% people in the world are living in DXH. More bloggers, small businesses, and </h5>
@@ -75,7 +77,7 @@
 <br><br><br>
 <div class="container">
     <div style="text-align: center">
-        <a href="/creatblog/user/">
+        <a href="/creatblog/user/{idd}">
             <button class="page-scroll btn btn-dark" type="submit" style="font-size: 25px">Start Your Blog</button>
         </a>
     </div>

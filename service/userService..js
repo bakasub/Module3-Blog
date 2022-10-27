@@ -22,5 +22,16 @@ class UserService {
             })
         })
 }
+static dataPort(informationPost,userId){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`select * from users`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
 }
 module.exports=UserService
