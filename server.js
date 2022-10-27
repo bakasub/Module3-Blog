@@ -2,7 +2,6 @@ const http = require('http')
 const url = require('url')
 const handler = require('./controller/router')
 const notFoundRouting = require('./controller/handle/notFoundRouting')
-const blankRouting = require('./controller/handle/blankRouting')
 
 function getUrl(req) {
     const urlParse = url.parse(req.url, true)

@@ -1,4 +1,4 @@
-const ConnectionSQL = require('./connectionSQL')
+const ConnectionSQL = require('../model/connectionSQL')
 ConnectionSQL.connecting()
 
 class BlogService {
