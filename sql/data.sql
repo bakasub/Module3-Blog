@@ -22,3 +22,8 @@ ALTER TABLE users
     add address varchar(50),
     add phoneNumber int
 ;
+create table admin(
+                      adminId int not null primary key auto_increment,
+                      adminName varchar(15),
+                      password varchar(8),
+);

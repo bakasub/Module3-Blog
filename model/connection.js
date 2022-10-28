@@ -1,16 +1,16 @@
 const mysql = require('mysql')
 class Connection {
-    configToMySql = {
+    static configToMySql = {
         host: 'localhost',
         user: 'root',
-        password: '123456',
+        password: '12345678',
         database: 'blog_database',
         charset: 'utf8_general_ci'
     }
-    getConnection(){
-        return mysql.createConnection(this.configToMySql)
+     static getConnection(){
+        return mysql.createConnection(Connection.configToMySql)
     }
-    connecting(){
+    static connecting(){
         this.getConnection().connect(error=>{
             if(error){
                 console.log(error)
@@ -20,6 +20,5 @@ class Connection {
         })
     }
 }
-let connection = new Connection()
-connection.connecting()
-module.exports = connection ;
+
+module.exports = Connection ;
