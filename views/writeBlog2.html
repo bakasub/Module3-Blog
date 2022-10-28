@@ -61,39 +61,15 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <h1 style="margin-top: 30px">Create post</h1>
-            <form action="creatblog/user" method="POST" >
-                <div class="form-group">
-                    <label for="title">Title <span class="require">*</span></label>
-                    <input type="text" class="form-control" name="title" id="title"/>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea rows="5" class="form-control" name="description" id="description"></textarea>
-                </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <p><span class="require">*</span>Choose your avatar</p>
-                    </div>
 
-                    <select class="form-select" aria-label="Default select example" name="status">
-                        <option selected>Choose your status</option>
-                        <option value="1">Public</option>
-                        <option value="0">Private</option>
-                    </select>
-                    <br> <br>
-                    <button type="submit" class="btn btn-primary">
-                        Create
-                    </button>
-                </div>
-            </form>
-<!--            <form action="" enctype="multipart/form-data">-->
-<!--                <div class="form-group">-->
-<!--                    <input type="file" name="multipleFiles" class="form-control-file border" multiple>-->
-<!--                </div>-->
-<!--                <button type="submit" class="btn btn-primary">-->
-<!--                Create-->
-<!--            </button>-->
-<!--            </form>-->
+                        <form action="" enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <input type="file" name="multipleFiles" class="form-control-file border" multiple>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                            Create
+                        </button>
+                        </form>
         </div>
     </div>
 </div>

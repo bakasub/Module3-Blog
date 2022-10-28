@@ -4,7 +4,9 @@ const handler = {
     'signup':BlogRouting.signUp,
     'login' :BlogRouting.logIn,
     'home/user' : BlogRouting.showHomeUser,
-    'creatblog/user' : BlogRouting.writeBlog
+    'creatblog/user' : BlogRouting.writeBlog,
+    'creatblog2/user': BlogRouting.upLoadWriteBlog
+
 
 }
 

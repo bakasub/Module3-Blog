@@ -22,9 +22,31 @@ class UserService {
             })
         })
 }
-static dataPort(informationPost,userId){
+static createDataPort(dataPort,userId,date){
     return new Promise((resolve, reject) => {
-        connection.getConnection().query(`select * from users`,(err,products)=>{
+        connection.getConnection().query(`insert into posts(title, content, date,userId,status)value('${dataPort.title} ','${dataPort.description}','${date}',${userId},${dataPort.status});`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
+static createImgDataPort(img,portId){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`UPDATE posts SET img = '${img}'WHERE id=${portId};`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
+static getIdNewPort(){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`select max(id)as idPort from posts`,(err,products)=>{
             if(err){
                 reject(err)
             }else {
@@ -34,4 +56,5 @@ static dataPort(informationPost,userId){
     })
 }
 }
+
 module.exports=UserService
