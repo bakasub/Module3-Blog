@@ -55,6 +55,29 @@ static getIdNewPort(){
         })
     })
 }
+static getDataPort(){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`select * from posts`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
 }
+static getDataPortWithId(id){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`select * from posts where posts.id= ${id}`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
+}
+
 
 module.exports=UserService
