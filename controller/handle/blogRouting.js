@@ -104,7 +104,7 @@ class BlogRouting {
         }
     }
     static showHomeUser(req, res){
-        fs.readFile('./views/user.html', 'utf-8', async (err, createHtmlUser) => {
+        fs.readFile('./views/homeLoggedIn.html', 'utf-8', async (err, createHtmlUser) => {
             if (err) {
                 console.log(err.message)
             } else {
@@ -152,19 +152,28 @@ class BlogRouting {
         }
     }
 
-    static showUserBlog (req,res) {
-        if (req.method == "GET") {
-            fs.readFile ("","utf-8",(err,htmlUserBlog)=>{
-                if (err) {
-                    console.log(err.message)
-                } else {
-                    let userBlog = ''
+    static getUserBlogHtml(posts, userBlogHtml) {
+        let blogBody = '';
+        posts.map((postsTable, id) => {
+            blogBody += `<div class="stream-post">
+                        <div class="sp-author">
 
-                }
-            })
-        }
+                            <a href="#" class="sp-author-avatar"><img src="#" alt=""></a>
+                            <h6 class="sp-author-name"><a href="#">${postsTable.userID.username}</a></h6></div>
+
+                        <div class="sp-content">
+                            <div class="sp-info">${postsTable.date}</div>
+                            <p class="sp-paragraph mb-0">${postsTable.content}</p>
+                            <div style="margin-top: 30px">
+                                <button class="btn btn-success px-4 py-1"><a href="post/edit/${postsTable.id}">Edit</a></button>
+                                <button class="btn btn-danger px-4 py-1"><a href="post/edit/${postsTable.id}">Remove</a></button>
+                            </div>
+                        </div>
+                    </div>`
+        });
+        userBlogHtml = userBlogHtml.replace('{userBlog}', blogBody);
+        return userBlogHtml;
     }
-
 }
 
 module.exports= BlogRouting
