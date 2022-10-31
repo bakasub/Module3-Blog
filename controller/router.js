@@ -1,7 +1,14 @@
-const handleRouting = require('./handle/handleRouting')
-
+let BlogRouting = require('./handle/blogRouting')
 const handler = {
-    "home": handleRouting.showHome,
+    '': BlogRouting.showHome,
+    'home': BlogRouting.showHome,
+    'signup': BlogRouting.signUp,
+    'login': BlogRouting.logIn,
+    'home/user': BlogRouting.showHomeUser,
+    'admin': BlogRouting.showHomeAdmin,
+    'admin/edit': BlogRouting.Edit,
+    'admin/delete' : BlogRouting.DeleteBlog,
+    'admin/deleteuser' : BlogRouting.DeleteUser,
 }
 
-module.exports = handler
+module.exports = handler;

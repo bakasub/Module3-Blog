@@ -8,7 +8,7 @@ create table users(
                       status bit not null
 );
 
-create table posts (
+create table posts  (
                        id int not null primary key auto_increment,
                        title varchar(255),
                        content varchar(1000),
@@ -17,3 +17,13 @@ create table posts (
 
 alter table posts add userId int not null;
 alter table posts add foreign key (userID) references users(userId);
+ALTER TABLE users
+    ADD fullName varchar(50),
+    add address varchar(50),
+    add phoneNumber int
+;
+create table admin(
+                      adminId int not null primary key auto_increment,
+                      adminName varchar(15),
+                      password varchar(8),
+);
