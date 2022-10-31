@@ -122,6 +122,55 @@ static deletePost(idPort){
         })
     })
 }
+// quan
+    static editUser(user, userId) {
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`update users set status = ${user.status} where userId = ${userId}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log('Block Success !!')
+                    resolve(products)
+                }
+            })
+        })
+    }
+
+    static deleteBlog(id) {
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`delete from posts where id = ${id}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log('Delete Success !!')
+                    resolve(products)
+                }
+            })
+        })
+    }
+    static deleteUser(userId) {
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`delete from users where userId = ${userId}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log('Delete Success !!')
+                    resolve(products)
+                }
+            })
+        })
+    }
+    static findByUserId(userId){
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`select * from users where userId = ${userId}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(products)
+                }
+            })
+        })
+    }
 }
 
 

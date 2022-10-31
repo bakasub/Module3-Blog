@@ -9,8 +9,12 @@ const handler = {
     'read/port' : BlogRouting.readPort,
     'blog/user' : BlogRouting.profile,
     'post/edit' : BlogRouting.editPort,
-    'post/delete':BlogRouting.deletePost
-
+    'post/delete':BlogRouting.deletePost,
+    // quann
+    'admin': BlogRouting.showHomeAdmin,
+    'admin/edit': BlogRouting.Edit,
+    'admin/delete' : BlogRouting.DeleteBlog,
+    'admin/deleteuser' : BlogRouting.DeleteUser,
 }
 
 module.exports = handler;
