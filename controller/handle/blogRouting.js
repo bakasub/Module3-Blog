@@ -1,6 +1,7 @@
 const fs = require('fs');
 const qs = require('qs')
-const UserService = require('C:\\Users\\admin\\WebstormProjects\\MD3\\Module3-Blog\\service\\userService..js')
+const UserService = require('../../service/userService')
+const PostService = require('../../service/postService')
 let alert = require('alert');
 
 class BlogRouting {
@@ -13,6 +14,7 @@ class BlogRouting {
                                 <td>${user.status}</td>
                                 <td>${user.email}</td>
                                 <td><a href="admin/edit/${user.userId}" class="btn btn-light">Edit</a></td>
+                                <td><a href="admin/deleteuser/${user.userId}" class="btn btn-light">Delete</a></td>
                             </tr>`
         });
         createHtml = createHtml.replace('{users}', tbody);
@@ -20,7 +22,7 @@ class BlogRouting {
     }
 
     static signUp(req, res) {
-        if (req.method == "GET") {
+        if (req.method === "GET") {
             fs.readFile("./views/signUp.html", "utf-8", (err, htmlSignUp) => {
                 if (err) {
                     console.log(err.message)
@@ -128,7 +130,9 @@ class BlogRouting {
                 console.log(err.message)
             } else {
                 let users = await UserService.dataUser();
+                let posts = await PostService.dataBlog()
                 createHtml = BlogRouting.getHtmlUser(users, createHtml);
+                createHtml = BlogRouting.getHtmlBlog(posts, createHtml);
                 res.writeHead(200, 'text/html')
                 res.write(createHtml)
                 res.end()
@@ -155,7 +159,6 @@ class BlogRouting {
                     console.log(err.message)
                 } else {
                     let user = await UserService.findByUserId(userId);
-                    console.log(user)
                     editHtml = editHtml.replace('{status}', user[0].status);
                     res.writeHead(200, 'text/html');
                     res.write(editHtml)
@@ -176,6 +179,66 @@ class BlogRouting {
                     res.writeHead(301, {'location': '/admin'});
                     res.end();
                 }
+            })
+        }
+    };
+
+    static getHtmlBlog(posts, createHtml) {
+        let tbody1 = '';
+        posts.map((post, index) => {
+            tbody1 += `<tr>
+                                <th scope="row">${index + 1}</th>
+                                <td>${post.id}</td>
+                                <td>${post.title}</td>
+                                <td><a href="admin/delete/${post.id}" class="btn btn-light">Delete</a></td>
+                            </tr>`
+        });
+        createHtml = createHtml.replace('{posts}', tbody1);
+        return createHtml;
+    }
+
+    static DeleteBlog(req, res, id) {
+
+        if (req.method === "GET") {
+            fs.readFile('./views/crud blog/adminDeleteBlog.html', 'utf-8', async (err, deleteHtml) => {
+                if (err) {
+                    console.log(err.message)
+                } else {
+                    let post = await PostService.dataBlog(id);
+                    deleteHtml = deleteHtml.replace('{id}', post[0].id);
+                    deleteHtml = deleteHtml.replace('{title}', post[0].title);
+                    res.writeHead(200, 'text/html');
+                    res.write(deleteHtml)
+                    res.end()
+                }
+            })
+        } else {
+            PostService.deleteBlog(id).then(r =>{
+                res.writeHead(301, {'location':'/admin'})
+                res.end()
+            })
+        }
+    };
+
+    static DeleteUser(req, res, userId) {
+
+        if (req.method === "GET") {
+            fs.readFile('./views/admin/adminDeleteUser.html', 'utf-8', async (err, deleteUserHtml) => {
+                if (err) {
+                    console.log(err.message)
+                } else {
+                    let post = await UserService.dataUser(userId);
+                    deleteUserHtml = deleteUserHtml.replace('{userId}', post[0].id);
+                    deleteUserHtml = deleteUserHtml.replace('{username}', post[0].username);
+                    res.writeHead(200, 'text/html');
+                    res.write(deleteUserHtml)
+                    res.end()
+                }
+            })
+        } else {
+            UserService.deleteUser(userId).then(r =>{
+                res.writeHead(301, {'location':'/admin'})
+                res.end()
             })
         }
     };

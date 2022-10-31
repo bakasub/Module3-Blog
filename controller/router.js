@@ -6,7 +6,9 @@ const handler = {
     'login': BlogRouting.logIn,
     'home/user': BlogRouting.showHomeUser,
     'admin': BlogRouting.showHomeAdmin,
-    'admin/edit': BlogRouting.Edit
+    'admin/edit': BlogRouting.Edit,
+    'admin/delete' : BlogRouting.DeleteBlog,
+    'admin/deleteuser' : BlogRouting.DeleteUser,
 }
 
 module.exports = handler;

@@ -4,7 +4,7 @@ connection.connecting();
 class UserService {
     static signUpUser(information) {
         return new Promise((resolve, reject) => {
-            connection.getConnection().query(`insert into users (username, password, email, status) VALUE('${information.name}','${information.password}','${information.email}','true')`, (err, products) => {
+            connection.getConnection().query(`insert into users (username, password, email, status) VALUE('${information.name}','${information.password}','${information.email}',1)`, (err, products) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -16,7 +16,7 @@ class UserService {
 
     static dataUser() {
         return new Promise((resolve, reject) => {
-            connection.getConnection().query(`select *  from users`, (err, users) => {
+            connection.getConnection().query(`select *  from users `, (err, users) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -45,6 +45,31 @@ class UserService {
                     reject(err)
                 } else {
                     console.log('Block Success !!')
+                    resolve(products)
+                }
+            })
+        })
+    }
+
+    static deleteBlog(id) {
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`delete from posts where id = ${id}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log('Delete Success !!')
+                    resolve(products)
+                }
+            })
+        })
+    }
+    static deleteUser(userId) {
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`delete from users where userId = ${userId}`, (err, products) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log('Delete Success !!')
                     resolve(products)
                 }
             })
