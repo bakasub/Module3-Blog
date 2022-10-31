@@ -22,6 +22,17 @@ class UserService {
             })
         })
 }
+static getUser(idUser){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`select * from users where userId =${idUser}`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
 static createDataPort(dataPort,userId,date){
     return new Promise((resolve, reject) => {
         connection.getConnection().query(`insert into posts(title, content, date,userId,status)value('${dataPort.title} ','${dataPort.description}','${date}',${userId},${dataPort.status});`,(err,products)=>{
@@ -66,9 +77,43 @@ static getDataPort(){
         })
     })
 }
+    static getDataPortOfUser(userId){
+        return new Promise((resolve, reject) => {
+            connection.getConnection().query(`select * from posts where userId = ${userId} `,(err,products)=>{
+                if(err){
+                    reject(err)
+                }else {
+                    resolve(products)
+                }
+            })
+        })
+    }
+
 static getDataPortWithId(id){
     return new Promise((resolve, reject) => {
         connection.getConnection().query(`select * from posts where posts.id= ${id}`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
+static upDatePort(newDataPort,idPort,date){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`UPDATE posts SET title = '${newDataPort.title}',   content = '${newDataPort.description}', date = '${date}',status = ${newDataPort.status} WHERE id =${idPort}`,(err,products)=>{
+            if(err){
+                reject(err)
+            }else {
+                resolve(products)
+            }
+        })
+    })
+}
+static deletePost(idPort){
+    return new Promise((resolve, reject) => {
+        connection.getConnection().query(`DELETE FROM posts WHERE id = ${idPort}`,(err,products)=>{
             if(err){
                 reject(err)
             }else {

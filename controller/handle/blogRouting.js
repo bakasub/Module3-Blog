@@ -132,7 +132,7 @@ class BlogRouting {
             const status = Boolean(Buffer.from(port.status).readInt8())
 
             if(status==false){
-                console.log('aaaa')
+
             }else { dataPortHtml += `<div class="card; col-3" style="width: 18rem;">
                     <img src="${port.img}" class="card-img-top" alt="..." style="width: 100%; height: 320px">
                     <div class="card-body">
@@ -237,7 +237,6 @@ class BlogRouting {
             });
         }
     }
-
     static myBlog(req, res) {
         fs.readFile('./views/profile.html', 'utf-8', async (err, createHtml) => {
             if (err) {
@@ -279,14 +278,95 @@ class BlogRouting {
             if (err) {
                 console.log(err.message)
             } else {
-                let dataPort = await UserService.getDataPort()
-                createHtml = createHtml.replace('{dataPort}', BlogRouting.portHome(dataPort))
+                let dataUser = await UserService.getUser(idUser)
+                console.log(dataUser)
+                let dataPort = await UserService.getDataPortOfUser(idUser)
+                createHtml = createHtml.replace('{userName}', dataUser[0].username)
+                createHtml = createHtml.replace('email', dataUser[0].email)
+                createHtml = createHtml.replace('{dataPort}', BlogRouting.portProfile(dataPort))
                 res.writeHead('200', 'txt/html')
                 res.write(createHtml)
                 res.end()
             }
         })
     }
+    static portProfile(dataPorts){
+        let dataPortHtml = `<div class="col-sm-12">
+                    <div class="panel panel-white post">`
+        for (let port of dataPorts) {
+
+
+
+             dataPortHtml += `
+                            <div class="post-heading">
+
+                            <div class="pull-left meta">
+
+                                
+                            </div>
+                        </div>
+                        <div class="post-image">
+                            <img src="${port.img}" class="image" alt="image post">
+                        </div>
+                        <div class="post-description">
+                          <a href="/read/port/${port.id}"><h4>${port.title}</h4></a>  
+                        <h6 class="text-muted time">Date Submitted: ${port.date}</h6>
+                            <a href="/post/edit/${port.id}" class="btn btn-success">edit</a>
+                            <a href="/post/delete/${port.id}" class="btn btn-success" style="background-color: red">delete</a>
+                        </div>
+<br>`
+
+        }
+        dataPortHtml += `   </div>
+                </div>`
+
+        return dataPortHtml
+    }
+    static editPort(req,res,idPort){
+
+        if (req.method == "GET") {
+            fs.readFile("./views/editBlog.html", "utf-8", (err, htmlEditBlog) => {
+                if (err) {
+                    console.log(err.message)
+                }
+                res.write(htmlEditBlog)
+                res.end()
+            })
+        } else {
+            //uploads
+
+
+            //data
+            let portChuck = ''
+            req.on('data', chunk => {
+                portChuck += chunk
+            })
+            req.on('end', async (err) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    let newDataPort = qs.parse(portChuck);
+                    let date = new Date()
+                    let dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `
+                     await UserService.upDatePort(newDataPort,idPort,dateString)
+                    // img
+                    res.writeHead(301, {'location': `/blog/user/${BlogRouting.userTotal.userId}`})
+                    //data
+                    res.end()
+                }
+            });
+        }
+    }
+    static async deletePost(req,res,idPort){
+        // let deletee = async (idPort)=>{
+           await UserService.deletePost(idPort)
+        // }
+        // deletee(idPort)
+        res.writeHead(301, {'location': `/blog/user/${BlogRouting.userTotal.userId}`})
+        //data
+        res.end()
+    }
+
 }
 
 module.exports = BlogRouting

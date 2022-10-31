@@ -7,7 +7,9 @@ const handler = {
     'creatblog/user' : BlogRouting.writeBlog,
     'creatblog2/user': BlogRouting.upLoadWriteBlog,
     'read/port' : BlogRouting.readPort,
-    'blog/user' : BlogRouting.profile
+    'blog/user' : BlogRouting.profile,
+    'post/edit' : BlogRouting.editPort,
+    'post/delete':BlogRouting.deletePost
 
 }
 
